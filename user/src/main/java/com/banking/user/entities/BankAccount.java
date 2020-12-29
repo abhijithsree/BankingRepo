@@ -20,8 +20,8 @@ public class BankAccount {
 	@TableGenerator(
 			   name = "Account_gen", 
 			   table = "ID_GEN", 
-			   pkColumnName = "GEN_NAME", 
-			   valueColumnName = "GEN_VAL", 
+			   pkColumnName = "gen_name", 
+			   valueColumnName = "gen_value", 
 			   pkColumnValue = "Account_gen", 
 			   initialValue = 10000, 
 			   allocationSize = 100)
