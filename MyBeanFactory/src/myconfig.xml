@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<beans>
+
+	
+
+	<mybean>
+		<bean key="id" value="employee" />
+				<bean key="employeename" value="abhijith" />
+		<bean key="employeeid" value="3456676" />
+		<bean key="age" value="45" />
+		<bean key="company" value="CORP" />
+		<bean key="package-scan" value="mybean/impl" />
+	</mybean>
+	
+	<mybean>
+		<bean key="id" value="animal" />
+				<bean key="animalname" value="tigar" />
+		<bean key="category" value="wildanimal" />
+		<bean key="weight" value="60" />
+		<bean key="eating" value="carnivoras" />
+				<bean key="type" value="nonveg" />
+		<bean key="package-scan" value="mybean/impl" />
+	</mybean>
+	
+		<mybean>
+		<bean key="id" value="car" />
+				<bean key="carname" value="BRV" />
+		<bean key="carbrand" value="honda" />
+		<bean key="engine" value="2000cc" />
+		<bean key="cartype" value="hatchback" />
+		<bean key="package-scan" value="mybean/impl" />
+	</mybean>
+
+
+</beans>
