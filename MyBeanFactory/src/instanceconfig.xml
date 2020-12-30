@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<beans>
+
+	
+
+	<mybean>
+		<bean service="beaninjector"  consumer="beantested"/>
+		<bean service="beanconsumer"  consumer="beaninjector"/>
+		
+				<bean key="package-scan" value="DI/files" />
+	</mybean>
+	
+	
+
+
+</beans>
