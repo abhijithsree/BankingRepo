@@ -7,9 +7,11 @@ import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.messaging.support.MessageBuilder;
 
 import com.banking.transaction.entities.BankAccount;
+import com.banking.transaction.entities.BankTransaction;
 import com.banking.transaction.model.BankingUser;
 import com.banking.transaction.producer.TransactionProducer;
 import com.banking.transaction.repository.BankAccountRepository;
+import com.banking.transaction.repository.BankTransactionRepository;
 import com.banking.transaction.service.TransactionService;
 
 @EnableBinding(TransactionProducer.class)
@@ -20,6 +22,9 @@ public class TransactionServiceImpl implements TransactionService{
 	
 	@Autowired
 	BankAccountRepository accountRepo;
+	
+	@Autowired
+	BankTransactionRepository transactionRepo;
 	
 	@Override
 	public String financeTransactions(Map<String, Object> user) {
@@ -52,15 +57,14 @@ public class TransactionServiceImpl implements TransactionService{
 		return "Finance Transaction Failed";
 	}
 	private BankingUser createAccount(Map<String, Object> user) {
-		BankAccount account = new BankAccount();
-		account.setName((String) user.get("name"));
-		account.setAmount((double) user.get("amount"));
-		account.setEmailId((String) user.get("emailid"));
-		account.setTransactionStatus((String) user.get("transactionstatus"));
-		account.setAccountNumber((String) user.get("accountnumber"));
-		BankAccount output=accountRepo.save(account);
-		BankingUser response = new BankingUser(output);
-		return response;
+		BankTransaction transaction = new BankTransaction();
+		transaction.setAmount((double) user.get("amount"));
+		transaction.setTransactionStatus((String) user.get("transactionstatus"));
+		transaction.setAccountNumber((String) user.get("accountnumber"));
+		BankTransaction response = transactionRepo.save(transaction);
+		BankingUser bankingUser=new BankingUser();
+		bankingUser.setAccountNumber((String) user.get("accountnumber"));
+		return bankingUser;
 	}
 	public BankingUser getAccountDetails(Map<String, Object> user) {
 		Integer creditAmount=0;
@@ -69,8 +73,8 @@ public class TransactionServiceImpl implements TransactionService{
 		String name=(String) user.get("name");
 		String emailId=(String) user.get("emailid");
 		String accountnumber=(String) user.get("accountnumber");
-		 creditAmount=accountRepo.getAccountDetails(emailId, accountnumber,"C");
-		 debitAmount=accountRepo.getAccountDetails(emailId, accountnumber,"D");
+		 creditAmount=accountRepo.getAccountDetails( accountnumber,"C");
+		 debitAmount=accountRepo.getAccountDetails( accountnumber,"D");
 		 if(debitAmount!=null) {
 		 balance = creditAmount-debitAmount;
 		 }
