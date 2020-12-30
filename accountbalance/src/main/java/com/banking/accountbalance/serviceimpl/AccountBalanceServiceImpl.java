@@ -39,8 +39,8 @@ public class AccountBalanceServiceImpl implements AccountBalanceService{
 		if(user.get("amount")!=null) {
 		 amount =(double) user.get("amount");
 		}
-		 creditAmount=bankAccount.getAccountDetails(emailId, accountnumber,"C");
-		 debitAmount=bankAccount.getAccountDetails(emailId, accountnumber,"D");
+		 creditAmount=bankAccount.getAccountDetails(accountnumber,"C");
+		 debitAmount=bankAccount.getAccountDetails(accountnumber,"D");
 		 System.out.println(creditAmount);
 		 System.out.println(debitAmount);
 		 if(debitAmount!=null) {
