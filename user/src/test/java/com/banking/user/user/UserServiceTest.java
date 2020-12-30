@@ -13,6 +13,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.aspectj.lang.annotation.Before;
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -31,7 +32,6 @@ import com.banking.user.model.BankingUser;
 import com.banking.user.repository.BankAccountRepository;
 import com.banking.user.service.UserService;
 
-import junit.framework.Assert;
 
 import static org.mockito.Mockito.when;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -50,7 +50,7 @@ public class UserServiceTest{
     @LocalServerPort
     int randomServerPort;
  
-    @Test
+    //@Test
     public void testAddUser() throws URISyntaxException 
     {
         final String baseUrl = "http://localhost:"+randomServerPort+"/users/createUser";

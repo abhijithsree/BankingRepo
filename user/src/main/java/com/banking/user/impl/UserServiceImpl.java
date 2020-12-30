@@ -15,6 +15,7 @@ import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.stereotype.Service;
 
 import com.banking.user.entities.BankAccount;
+import com.banking.user.entities.BankTransaction;
 import com.banking.user.model.BankingUser;
 import com.banking.user.producer.UserRegistrationSource;
 import com.banking.user.repository.BankAccountRepository;
@@ -37,14 +38,17 @@ public class UserServiceImpl implements UserService{
 	public BankingUser createUser(Map<String, Object> user) {
         Random rand = new Random(); 
 		BankAccount account = new BankAccount();
+		BankTransaction transaction = new BankTransaction();
 		account.setName((String) user.get("name"));
-		account.setAmount((double) user.get("amount"));
+		transaction.setAmount((double) user.get("amount"));
 		account.setEmailId((String) user.get("emailid"));
-		account.setTransactionStatus((String) user.get("transactionstatus"));
+		transaction.setTransactionStatus((String) user.get("transactionstatus"));
 		account.setAccountNumber(String.valueOf(rand.nextInt(100000)));
+		transaction.setAccountNumber(account.getAccountnumber());
+		account.setBankTransaction(transaction);
 		BankAccount output=accountRepo.save(account);
 		BankingUser response = new BankingUser(output);
-
+		
 		if(output!=null) {
 			userSource.userRegistration().send(MessageBuilder.withPayload(output).build());
 			logger.info("Send to User Registration Q", output);
