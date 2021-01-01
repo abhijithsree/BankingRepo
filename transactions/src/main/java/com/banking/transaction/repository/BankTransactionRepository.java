@@ -7,17 +7,13 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import com.banking.transaction.entities.BankAccount;
+import com.banking.transaction.entities.BankTransaction;
 
 
 @Repository
-public interface BankAccountRepository extends CrudRepository<BankAccount,Long>{
+public interface BankTransactionRepository extends CrudRepository<BankTransaction,Long>{
 
 	
 
-	@Query(value="SELECT SUM(b.amount) FROM BANKUSERTRANSACTION b WHERE  b.accountnumber = ?1 and b.transactionStatus=?2",nativeQuery=true)
-	public Integer getAccountDetails(String accountnumber,String transactionStatus);
 	
-
-	
-
 }
