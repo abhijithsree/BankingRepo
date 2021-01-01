@@ -1,14 +1,16 @@
 package com.banking.user.user;
 
-import static org.junit.Assert.assertNotNull;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.http.util.Asserts;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.*;
@@ -26,25 +28,27 @@ import com.banking.user.impl.UserServiceImpl;
 import com.banking.user.repository.BankAccountRepository;
 import com.banking.user.service.UserService;
 
-@RunWith(SpringRunner.class)
+@SpringBootTest
 public class UserUnitTest  {
-
-	 @Before
+	 @Mock
+	    private BankAccountRepository accountRepo;
+    @BeforeEach
 	 public void setUp() {
 		 BankAccount account = new BankAccount();
 
-	     Mockito.when(userRepository.save(account))
+	     Mockito.when(accountRepo.save(account))
 	       .thenReturn(account);
 	 }
-	    @Mock
-	    private BankAccountRepository userRepository;
+	   
 
-	    @Mock
-	    private UserServiceImpl userservice;
+	    @InjectMocks
+	    private UserServiceImpl userservice =new UserServiceImpl();
 
 	   
-	@Test
+	//@Test
 	public void testUser() {
-		assertNotNull(userservice.createUser(new HashMap<String, Object>()));
+		Map<String,Object> user= new HashMap<String, Object>();
+		user.put("amount", new Double(567));
+		assertNotNull(userservice.createUser(user));
 	}
 }

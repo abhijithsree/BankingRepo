@@ -1,0 +1,37 @@
+version: "3"
+services:
+  bank-user:
+    image: bank-user
+    ports:
+      - "8091:8091"
+    networks:
+      - user-mysql
+      - user-message
+    depends_on:
+      - mysql-standalone
+ 
+  mysql-standalone:
+    image: mysql:5.6
+    ports:
+      - "3306:3306"
+    networks:
+      - user-mysql
+    environment:
+      MYSQL_DATABASE: test
+      MYSQL_USER: abhi
+      MYSQL_PASSWORD: abhi143
+      MYSQL_ROOT_PASSWORD: abhi143
+  
+  rabbitbank:
+    image: rabbitmq:3.6-management
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    networks:
+      - user-message  
+  
+
+    
+networks:
+  user-mysql:
+  user-message:

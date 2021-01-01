@@ -13,8 +13,11 @@ import com.banking.transaction.entities.BankAccount;
 public interface BankAccountRepository extends CrudRepository<BankAccount,Long>{
 
 	
-	@Query(value="SELECT SUM(b.amount) FROM BANKUSERACCOUNT b WHERE b.emailid = ?1 and b.accountnumber = ?2 and b.transactionStatus=?3",nativeQuery=true)
-	public Integer getAccountDetails(String emailid,String accountnumber,String transactionStatus);
+
+	@Query(value="SELECT SUM(b.amount) FROM BANKUSERTRANSACTION b WHERE  b.accountnumber = ?1 and b.transactionStatus=?2",nativeQuery=true)
+	public Integer getAccountDetails(String accountnumber,String transactionStatus);
+	
+
 	
 
 }
