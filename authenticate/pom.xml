@@ -90,6 +90,8 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+				 <finalName>bank-user-auth</finalName>
+		
 	</build>
 
 	<repositories>
