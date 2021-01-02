@@ -1,6 +1,6 @@
 FROM openjdk:8
 
-EXPOSE 8093
+EXPOSE 8096
 
 ADD target/bank-balance-notify.jar bank-balance-notify.jar
 
