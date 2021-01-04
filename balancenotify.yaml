@@ -1,0 +1,43 @@
+# Define 'Service' to expose backend application deployment
+apiVersion: v1
+kind: Service
+metadata:
+  name: bank-balancenotify
+spec:
+  selector:  # backend application pod lables should match these
+    app: bank-balancenotify
+    tier: backend
+  ports:
+  - protocol: "TCP"
+    port: 8096
+    targetPort: 8096
+  type: LoadBalancer   # use NodePort, if you are not running Kubernetes on cloud
+---
+# Configure 'Deployment' of backend application
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bank-balancenotify
+  labels: 
+    app: bank-balancenotify
+    tier: backend
+spec:
+  replicas: 1    # Number of replicas of back-end application to be deployed
+  selector:
+    matchLabels: # backend application pod labels should match these
+      app: bank-balancenotify
+      tier: backend
+  template:
+    metadata:
+      labels: # Must macth 'Service' and 'Deployment' labels
+        app: bank-balancenotify
+        tier: backend  
+    spec:                 
+      containers: 
+      - name: bank-balancenotify
+        image: gcr.io/nodal-wall-298014/bank-balancenotify:v1
+        ports:
+        - containerPort: 8096
+
+
+

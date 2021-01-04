@@ -1,0 +1,40 @@
+# Define 'Service' to expose backend application deployment
+apiVersion: v1
+kind: Service
+metadata:
+  name: bank-eureka
+spec:
+  selector:  # backend application pod lables should match these
+    app: bank-eureka
+    tier: backend
+  ports:
+  - protocol: "TCP"
+    port: 8761
+    targetPort: 8761
+  type: LoadBalancer   # use NodePort, if you are not running Kubernetes on cloud
+---
+# Configure 'Deployment' of backend application
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bank-eureka
+  labels: 
+    app: bank-eureka
+    tier: backend
+spec:
+  replicas: 1    # Number of replicas of back-end application to be deployed
+  selector:
+    matchLabels: # backend application pod labels should match these
+      app: bank-eureka
+      tier: backend
+  template:
+    metadata:
+      labels: # Must macth 'Service' and 'Deployment' labels
+        app: bank-eureka
+        tier: backend  
+    spec:                 
+      containers: 
+      - name: bank-eureka
+        image: gcr.io/nodal-wall-298014/bank-eureka:v1
+        ports:
+        - containerPort: 8761
